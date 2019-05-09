@@ -3,10 +3,13 @@ package beater
 import (
 	"fmt"
 	"time"
+	"log"
 
 	"github.com/elastic/beats/libbeat/beat"
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/logp"
+
+	"github.com/rubrikinc/rubrik-sdk-for-go/rubrikcdm"
 
 	"github.com/railroadmanuk/rubrikbeat/config"
 )
@@ -42,6 +45,16 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		return err
 	}
 
+	rubrik, err := rubrikcdm.ConnectEnv()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	clusterVersion, err := rubrik.ClusterVersion()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	ticker := time.NewTicker(bt.config.Period)
 	counter := 1
 	for {
@@ -54,8 +67,9 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		event := beat.Event{
 			Timestamp: time.Now(),
 			Fields: common.MapStr{
-				"type":    b.Info.Name,
-				"counter": counter,
+				"version": clusterVersion,
+				"id": "1234",
+				"clusterName": "test",
 			},
 		}
 		bt.client.Publish(event)

@@ -173,7 +173,6 @@
           type: keyword
           description: >
             List of hardware-addresses, usually MAC-addresses.
-
 - key: kubernetes
   title: Kubernetes
   description: >
@@ -223,3 +222,30 @@
           type: keyword
           description: >
             Kubernetes container image
+
+- key: rubrik
+  title: "Rubrik"
+  description: >
+    []experimental
+
+    Status metrics collected from Rubrik CDM
+  fields:
+    - name: rubrik
+      type: group
+      description: >
+      fields:
+        - name: clusterInfo
+          type: group
+          description: >
+            CDM Cluster Info
+          fields:
+            - name: clusterName
+              type: keyword
+              description: >
+                Name of the Rubrik cluster.
+            - name: id
+              type: keyword
+              description: >
+                ID of the Rubrik cluster.
+            - name: version
+              type: keyword

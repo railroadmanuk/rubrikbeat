@@ -2,8 +2,22 @@
   title: rubrikbeat
   description:
   fields:
-    - name: counter
-      type: long
-      required: true
+    - name: rubrik
+      type: group
       description: >
-        PLEASE UPDATE DOCUMENTATION
+      fields:
+        - name: clusterInfo
+          type: group
+          description: >
+            CDM Cluster Info
+          fields:
+            - name: clusterName
+              type: string
+              description: >
+                Name of the Rubrik cluster.
+            - name: id
+              type: string
+              description: >
+                ID of the Rubrik cluster.
+            - name: version
+              type: string
