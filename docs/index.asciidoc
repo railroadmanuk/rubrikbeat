@@ -1,0 +1,5 @@
+= Rubrikbeat Docs
+
+Welcome to the Rubrikbeat documentation.
+
+
