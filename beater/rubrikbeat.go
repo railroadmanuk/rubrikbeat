@@ -55,6 +55,21 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		log.Fatal(err)
 	}
 
+	nodeDetails, err := rubrik.Get("internal","/cluster/me/node")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	systemStatus, err := rubrik.Get("internal","/cluster/me/system_status")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	systemStorage, err := rubrik.Get("internal","/stats/system_storage")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	ticker := time.NewTicker(bt.config.Period)
 	counter := 1
 	for {
@@ -67,9 +82,14 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		event := beat.Event{
 			Timestamp: time.Now(),
 			Fields: common.MapStr{
-				"version": clusterDetails.(map[string]interface{})["version"],
-				"id": clusterDetails.(map[string]interface{})["id"],
-				"clusterName": clusterDetails.(map[string]interface{})["name"],
+				"clusterInfo.version": clusterDetails.(map[string]interface{})["version"],
+				"clusterInfo.id": clusterDetails.(map[string]interface{})["id"],
+				"clusterInfo.clusterName": clusterDetails.(map[string]interface{})["name"],
+				"clusterInfo.nodeCount": nodeDetails.(map[string]interface{})["total"],
+				"clusterInfo.systemStatus": systemStatus.(map[string]interface{})["status"],
+				"clusterStorage.systemTotal": systemStorage.(map[string]interface{})["total"],
+				"clusterStorage.systemUsed": systemStorage.(map[string]interface{})["used"],
+				"clusterStorage.systemAvailable": systemStorage.(map[string]interface{})["available"],
 			},
 		}
 		bt.client.Publish(event)

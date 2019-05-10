@@ -21,3 +21,30 @@
                 ID of the Rubrik cluster.
             - name: version
               type: string
+              description: >
+                The current running version of the Rubrik cluster.
+            - name: nodeCount
+              type: integer
+              description: >
+                The number of nodes in the Rubrik cluster.
+            - name: systemStatus
+              type: string
+              description: >
+                The current health of the system.
+        - name: clusterStorage
+          type: group
+          description: >
+            CDM Storage Info
+          fields:
+          - name: systemTotal
+            type: float
+            description: >
+              Total storage in system
+          - name: systemUsed
+            type: float
+            description: >
+              Used storage in system
+          - name: systemAvailable
+            type: float
+            description: >
+              Available storage in system
