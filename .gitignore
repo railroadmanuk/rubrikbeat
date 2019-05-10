@@ -5,3 +5,6 @@
 /rubrikbeat
 /rubrikbeat.test
 *.pyc
+
+./logs/rubrikbeat
+/rubrikbeat.lab.yml

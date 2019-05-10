@@ -50,7 +50,7 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		log.Fatal(err)
 	}
 
-	clusterVersion, err := rubrik.ClusterVersion()
+	clusterDetails, err := rubrik.Get("v1","/cluster/me")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,9 +67,9 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		event := beat.Event{
 			Timestamp: time.Now(),
 			Fields: common.MapStr{
-				"version": clusterVersion,
-				"id": "1234",
-				"clusterName": "test",
+				"version": clusterDetails.(map[string]interface{})["version"],
+				"id": clusterDetails.(map[string]interface{})["id"],
+				"clusterName": clusterDetails.(map[string]interface{})["name"],
 			},
 		}
 		bt.client.Publish(event)
