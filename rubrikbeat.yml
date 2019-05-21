@@ -125,3 +125,6 @@ processors:
 # have the Elasticsearch output configured, you can simply uncomment the
 # following line.
 #xpack.monitoring.elasticsearch:
+setup.template.name: "rubrikbeat"
+setup.template.fields: "_meta/fields.yml"
+setup.dashboards.index: "rubrikbeat-*"

@@ -82,14 +82,14 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		event := beat.Event{
 			Timestamp: time.Now(),
 			Fields: common.MapStr{
-				"clusterInfo.version": clusterDetails.(map[string]interface{})["version"],
-				"clusterInfo.id": clusterDetails.(map[string]interface{})["id"],
-				"clusterInfo.clusterName": clusterDetails.(map[string]interface{})["name"],
-				"clusterInfo.nodeCount": nodeDetails.(map[string]interface{})["total"],
-				"clusterInfo.systemStatus": systemStatus.(map[string]interface{})["status"],
-				"clusterStorage.systemTotal": systemStorage.(map[string]interface{})["total"],
-				"clusterStorage.systemUsed": systemStorage.(map[string]interface{})["used"],
-				"clusterStorage.systemAvailable": systemStorage.(map[string]interface{})["available"],
+				"clusterVersion": clusterDetails.(map[string]interface{})["version"],
+				"clusterId": clusterDetails.(map[string]interface{})["id"],
+				"clusterName": clusterDetails.(map[string]interface{})["name"],
+				"nodeCount": nodeDetails.(map[string]interface{})["total"],
+				"systemStatus": systemStatus.(map[string]interface{})["status"],
+				"systemTotalStorage": systemStorage.(map[string]interface{})["total"],
+				"systemUsedStorage": systemStorage.(map[string]interface{})["used"],
+				"systemAvailableStorage": systemStorage.(map[string]interface{})["available"],
 			},
 		}
 		bt.client.Publish(event)

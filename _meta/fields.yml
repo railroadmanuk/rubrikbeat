@@ -11,40 +11,40 @@
           description: >
             CDM Cluster Info
           fields:
-            - name: clusterName
-              type: string
-              description: >
-                Name of the Rubrik cluster.
-            - name: id
-              type: string
-              description: >
-                ID of the Rubrik cluster.
-            - name: version
-              type: string
-              description: >
-                The current running version of the Rubrik cluster.
-            - name: nodeCount
-              type: integer
-              description: >
-                The number of nodes in the Rubrik cluster.
-            - name: systemStatus
-              type: string
-              description: >
-                The current health of the system.
+          - name: clusterName
+            type: keyword
+            description: >
+              Name of the Rubrik cluster.
+          - name: clusterId
+            type: string
+            description: >
+              ID of the Rubrik cluster.
+          - name: clusterVersion
+            type: string
+            description: >
+              The current running version of the Rubrik cluster.
+          - name: nodeCount
+            type: number
+            description: >
+              The number of nodes in the Rubrik cluster.
+          - name: systemStatus
+            type: keyword
+            description: >
+              The current health of the system.
         - name: clusterStorage
           type: group
           description: >
             CDM Storage Info
           fields:
-          - name: systemTotal
-            type: float
+          - name: systemTotalStorage
+            type: number
             description: >
               Total storage in system
-          - name: systemUsed
-            type: float
+          - name: systemUsedStorage
+            type: number
             description: >
               Used storage in system
-          - name: systemAvailable
-            type: float
+          - name: systemAvailableStorage
+            type: number
             description: >
               Available storage in system

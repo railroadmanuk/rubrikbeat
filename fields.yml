@@ -3,7 +3,7 @@
   description:
   fields:
     - name: counter
-      type: long
+      type: number
       required: true
       description: >
         PLEASE UPDATE DOCUMENTATION
@@ -249,3 +249,28 @@
                 ID of the Rubrik cluster.
             - name: version
               type: keyword
+            - name: nodeCount
+              type: number
+              description: >
+                The number of nodes in the Rubrik cluster.
+            - name: systemStatus
+              type: keyword
+              description: >
+                The current health of the system.
+        - name: clusterStorage
+          type: group
+          description: >
+            CDM Storage Info
+          fields:
+          - name: systemTotal
+            type: number
+            description: >
+              Total storage in system
+          - name: systemUsed
+            type: number
+            description: >
+              Used storage in system
+          - name: systemAvailable
+            type: number
+            description: >
+              Available storage in system
