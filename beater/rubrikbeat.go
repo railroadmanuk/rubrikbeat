@@ -50,26 +50,6 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		log.Fatal(err)
 	}
 
-	clusterDetails, err := rubrik.Get("v1","/cluster/me")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	nodeDetails, err := rubrik.Get("internal","/cluster/me/node")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	systemStatus, err := rubrik.Get("internal","/cluster/me/system_status")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	systemStorage, err := rubrik.Get("internal","/stats/system_storage")
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	ticker := time.NewTicker(bt.config.Period)
 	counter := 1
 	for {
@@ -77,6 +57,31 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 		case <-bt.done:
 			return nil
 		case <-ticker.C:
+		}
+
+		clusterDetails, err := rubrik.Get("v1","/cluster/me")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		nodeDetails, err := rubrik.Get("internal","/cluster/me/node")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		systemStatus, err := rubrik.Get("internal","/cluster/me/system_status")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		systemStorage, err := rubrik.Get("internal","/stats/system_storage")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		runwayRemaining, err := rubrik.Get("internal","/stats/runway_remaining")
+		if err != nil {
+			log.Fatal(err)
 		}
 
 		event := beat.Event{
@@ -90,6 +95,7 @@ func (bt *Rubrikbeat) Run(b *beat.Beat) error {
 				"systemTotalStorage": systemStorage.(map[string]interface{})["total"],
 				"systemUsedStorage": systemStorage.(map[string]interface{})["used"],
 				"systemAvailableStorage": systemStorage.(map[string]interface{})["available"],
+				"systemRunwayRemaining": runwayRemaining.(map[string]interface{})["days"],
 			},
 		}
 		bt.client.Publish(event)

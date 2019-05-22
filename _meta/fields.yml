@@ -48,3 +48,7 @@
             type: number
             description: >
               Available storage in system
+          - name: systemRunwayRemaining
+            type: number
+            description: >
+              Number of days remaining before the system fills up
